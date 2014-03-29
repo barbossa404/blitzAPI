@@ -23,3 +23,7 @@ Where not otherwise stated every function works exactly like it's BB counterpart
 ***Sample***
 
 See Blitz2D for a very simple example. It won't work because I did not provide the images, but you should be able to replace them^^
+
+
+
+Released under a MIT License, read LICENSE for more information.
