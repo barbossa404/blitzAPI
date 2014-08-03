@@ -6,6 +6,12 @@ clean:
 	rm -fR Debug
 	rm -fR Release
 	rm -f *.o
+	
+clean-all:
+	rm -fR Debug
+	rm -fR Release
+	rm -f *.o
+	rm -f libBlitz2D.a
 
 $(TARGET): Blitz2D.o Blitz_Buffer.o Blitz_Drawing.o Blitz_Font.o Blitz_Image.o Blitz_Input.o BlitzAPI.o
 	ar rcs $(TARGET) Blitz2D.o Blitz_Buffer.o Blitz_Drawing.o Blitz_Font.o Blitz_Image.o Blitz_Input.o BlitzAPI.o 
