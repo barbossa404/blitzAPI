@@ -65,8 +65,21 @@ void Flip()
 
 void Cls()
 {
-	SDL_RenderClear(BlitzAPI::mRenderer);
-	SDL_PumpEvents();
+    // Update the drawcolor
+    SDL_SetRenderDrawColor(
+            BlitzAPI::mRenderer, BlitzAPI::mClsColor.red, BlitzAPI::mClsColor.green, 
+            BlitzAPI::mClsColor.blue, BlitzAPI::mClsColor.alpha);
+    
+    // Clear the screen
+    SDL_RenderClear(BlitzAPI::mRenderer);
+    
+    // Update the internal states
+    SDL_PumpEvents();
+    
+    // Reset drawcolor
+    SDL_SetRenderDrawColor(
+            BlitzAPI::mRenderer, BlitzAPI::mColor.red, BlitzAPI::mColor.green, 
+            BlitzAPI::mColor.blue, BlitzAPI::mColor.alpha);
 }
 
 void ClsColor(int red, int green, int blue)
@@ -74,17 +87,11 @@ void ClsColor(int red, int green, int blue)
 	BlitzAPI::mClsColor.red = red;
 	BlitzAPI::mClsColor.green = green;
 	BlitzAPI::mClsColor.blue = blue;
-
-	W("Warning: Overriding draw color!");
-	SDL_SetRenderDrawColor(BlitzAPI::mRenderer, red, green, blue, 255);
 }
 
 void ClsColor(Colour _color)
 {
 	BlitzAPI::mClsColor = _color;
-
-	W("Warning: Overriding draw color!");
-	SDL_SetRenderDrawColor(BlitzAPI::mRenderer, _color.red, _color.green, _color.blue, _color.alpha);
 }
 
 void AppTitle(std::string fileName)

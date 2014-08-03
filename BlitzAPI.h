@@ -239,16 +239,22 @@ void Text(int x, int y, std::string text, bool center_x = false, bool center_y =
 /*
 	Returns wether a certain key is beeing held down. Differently from BB this function takes SDL_SCANCODE_??? as parameter.
 	Keep in mind that the internal keystate array is updated on Cls(), Flip() and UpdateWorld() only, so keys pressed between the
-	calls can be missed out.
+	calls can be missed out. If you want to disable this, use something like KeyDown(SDL_SCANCODE_SPACE, true).
+
 	If you want to wait for a certain event, use WaitKey() instead.
 */
-bool KeyDown(SDL_Scancode scancode);
+bool KeyDown(SDL_Scancode scancode, bool forceUpdate = false);
 
 /*
 	Want to offer rebindable keys? This function returns a human readable name for a given scancode so you can
 	use it in your menu.
 */
 std::string KeyName(SDL_Scancode scancode);
+
+/*
+        Waits until the user presses any key or attempts to close the window.
+ */
+void WaitKey();
 
 /*
 	Returns the time since Graphics() was called in milliseconds. The resolution should be enough for 1/1000s, for more accurate

@@ -1,18 +1,36 @@
 #include "stdafx.h"
 #include "BlitzAPI.h"
 
-bool KeyDown(SDL_Scancode scancode)
+bool KeyDown(SDL_Scancode scancode, bool forceUpdate)
 {
-	if (BlitzAPI::mKeyboardState[scancode])
-		return true;
-	else
-		return false;
+    if (forceUpdate)
+        UpdateWorld();
+    
+    if (BlitzAPI::mKeyboardState[scancode])
+	return true;
+    else
+	return false;
 }
 
 void UpdateWorld()
 {
 	// Only processes events for now.
 	SDL_PumpEvents();
+}
+
+void WaitKey()
+{
+    /* An SDL_Event */
+    SDL_Event event;
+ 
+    while (true)
+    {
+        SDL_WaitEvent(&event);
+
+        /* If a quit event has been sent */
+        if ((event.type == SDL_KEYDOWN) || (event.type == SDL_QUIT))
+            return;
+    }
 }
 
 std::string KeyName(SDL_Scancode scancode)
