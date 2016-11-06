@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "BlitzAPI.h"
 
+void SetDataPath(std::string dataPath)
+{
+	BlitzAPI::dataPath = dataPath;
+}
+
 void Graphics(int width, int height, int colorDepth, int modifier)
 {
 	if (BlitzAPI::mWindow)
@@ -118,6 +123,11 @@ double fps()
 	return t;
 }
 
+void Delay(int milliSeconds)
+{
+	SDL_Delay(milliSeconds);
+}
+
 namespace BlitzAPI
 {
 	SDL_Window* mWindow = 0;
@@ -150,4 +160,6 @@ namespace BlitzAPI
 	{
 		mPerformanceFrequency = SDL_GetPerformanceFrequency() / 1000;
 	}
+
+	std::string dataPath;
 }

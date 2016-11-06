@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "./stdafx.h"
 #pragma once
 
 #define W(x) std::cout << x << std::endl;
@@ -15,6 +15,13 @@
 #endif
 
 /*
+	Another compability hack, this time for SDL which defines main to SDL_main for whatever reason
+*/
+#ifdef main
+#undef main
+#endif
+
+/*
 Custom Datatypes
 */
 
@@ -22,6 +29,10 @@ Custom Datatypes
 struct Colour 
 {
 	Colour() : red(255), green(255), blue(255), alpha(255)
+	{
+	}
+
+	Colour(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255) : red(r), green(g), blue(b), alpha(a)
 	{
 	}
 	
@@ -161,6 +172,13 @@ void FreeImage(Image _image);
 void DrawImage(const Image &_image, int x, int y);
 
 /*
+	Draws the given image on the current buffer with coordinates
+	referencing the bottom right corner of the screen instead of the default
+	upper left
+*/
+void DrawImage(const Image &_image, int x, int y, bool invertCoords);
+
+/*
 	Tiles a image across the current buffer. Use x and y as an offset if you want.
 */
 void TileImage(const Image &_image, int x = 0, int y = 0);
@@ -223,7 +241,7 @@ void FreeFont(const Font &_font);
 	Creates an Image from the given text. This is a faster alternative to Text() when you want to draw the same
 	text more than once. Improves performance.
 */
-Image TextImage(std::string text);
+Image TextImage(const std::string &text);
 
 /*
 	Sets the currently active font.
@@ -257,6 +275,11 @@ std::string KeyName(SDL_Scancode scancode);
 void WaitKey();
 
 /*
+	Do nothing for the next milliSeconds milliseconds.
+*/
+void Delay(int milliSeconds);
+
+/*
 	Returns the time since Graphics() was called in milliseconds. The resolution should be enough for 1/1000s, for more accurate
 	results for profiling (down to times between single API-calls) consider using ticks() instead.
 */
@@ -288,6 +311,11 @@ double fps();
 */
 void UpdateWorld();
 
+/*
+	Sets a path which will be prefixed to all pathes accepted by BlitzAPI functions.
+	Example: SetDataPath("..\\Data\\"); auto t = LoadImage("hello.png"); will load ..\\Data\\hello.png
+*/
+void SetDataPath(std::string dataPath);
 
 /*
 	----- BlitzAPI-Namespace is used for internal variables -----
@@ -323,4 +351,6 @@ namespace BlitzAPI
 	void InitTimer();
 	extern double mOldTime;
 	extern double mNewTime;
+
+	extern std::string dataPath;
 }

@@ -51,3 +51,11 @@ void LoadBuffer(std::string fileName)
 	// Free the texture
 	SDL_DestroyTexture(img);
 }
+
+void SetBuffer(char BufferMode)
+{
+	if (BufferMode != BACKBUFFER)
+	{
+		W("Warning: Falling back to backbuffer mode");
+	}
+}

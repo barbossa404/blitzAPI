@@ -29,6 +29,9 @@ void Text(int x, int y, std::string text, bool center_x, bool center_y)
 
 Font LoadFont(std::string fontName, int size, bool bold, bool italic, bool underlined)
 {
+	if (!BlitzAPI::dataPath.empty())
+		fontName = BlitzAPI::dataPath + fontName;
+
 	// Load the font
 	Font t;
 	t.font = TTF_OpenFont(fontName.c_str(), size);
@@ -65,7 +68,7 @@ void FreeFont(const Font &_font)
 	TTF_CloseFont(_font.font);
 }
 
-Image TextImage(std::string text)
+Image TextImage(const std::string& text)
 {
 	// The surface is required to create the texture
 	Image t;

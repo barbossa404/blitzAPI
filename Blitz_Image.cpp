@@ -3,6 +3,9 @@
 
 Image LoadImage(std::string fileName)
 {
+	if (!BlitzAPI::dataPath.empty())
+		fileName = BlitzAPI::dataPath + fileName;
+
 	Image t;
 	t.img = IMG_LoadTexture(BlitzAPI::mRenderer, fileName.c_str());
 
@@ -37,6 +40,17 @@ void DrawImage(const Image &_image, int x, int y)
 	rect.y = y;
 
 	// Copy the texture to the buffer
+	SDL_RenderCopy(BlitzAPI::mRenderer, _image.img, NULL, &rect);
+}
+
+void DrawImage(const Image &_image, int x, int y, bool invertCoords)
+{
+	SDL_Rect rect;
+	rect.w = _image.x;
+	rect.h = _image.y;
+	rect.x = BlitzAPI::mWidth - x - rect.w;
+	rect.y = BlitzAPI::mHeight - y - rect.h;
+
 	SDL_RenderCopy(BlitzAPI::mRenderer, _image.img, NULL, &rect);
 }
 
